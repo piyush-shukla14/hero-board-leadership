@@ -1,0 +1,255 @@
+/* company-banner block - based on hero-aem-website leadership-banner reference */
+.company-banner-wrapper {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(263deg, #060606 0.68%, #202020 95.94%);
+}
+
+.company-banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(263deg, #060606 0.68%, #202020 95.94%);
+}
+
+.company-banner-inner {
+  position: relative;
+  width: 100%;
+}
+
+.company-banner-carousel {
+  width: 100%;
+  position: relative;
+}
+
+.company-banner-slides {
+  position: relative;
+  width: 100%;
+}
+
+.company-banner-slide {
+  width: 100%;
+}
+
+.company-banner-slide:not(.active) {
+  display: none;
+}
+
+/* Container: image + content, bottom-aligned flex row */
+.company-banner-slide-inner {
+  display: flex;
+  align-items: flex-end;
+  min-height: 550px;
+  height: 550px;
+}
+
+/* Image box - fixed size, contained (not cropped) */
+.company-banner-bg {
+  width: 532px;
+  height: 451px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.company-banner-bg-mobile {
+  display: none;
+}
+
+.company-banner-bg picture,
+.company-banner-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+  display: block;
+}
+
+/* Content area */
+.company-banner-content {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  color: var(--white, #fff);
+  padding: 96px 8% 96px 4%;
+  max-height: 550px;
+}
+
+.company-banner-text-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 48%;
+}
+
+.company-banner-heading {
+  display: block;
+  color: var(--white, #fff);
+  font-family: var(--transducer-bold), sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.15;
+  max-width: 692px;
+  margin: 0;
+  text-transform: none;
+}
+
+.company-banner-quote {
+  color: #f00;
+  font-size: 80px;
+  font-family: var(--transducer-bold), sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.company-banner-quote-start {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-right: 16px;
+}
+
+.company-banner-quote-end {
+  margin-left: 5px;
+}
+
+.company-banner-heading-text {
+  display: inline;
+}
+
+.company-banner-subtitle {
+  color: var(--white, #fff);
+  padding: 48px 0 24px;
+  font-family: var(--tstar-medium), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.company-banner-subtitle p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.company-banner-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 144px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--white, #fff);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 2px solid var(--white, #fff);
+  font-family: var(--tstar-bold), sans-serif;
+  background: linear-gradient(263deg, #060606 0.68%, #202020 95.94%);
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.company-banner-cta:hover,
+.company-banner-cta:focus-visible {
+  background: var(--white, #fff);
+  color: #000;
+}
+
+.company-banner-indicators {
+  display: none;
+}
+
+.company-banner-indicator {
+  display: none;
+}
+
+/* Tablet */
+@media (width <= 1220px) and (width >= 767px) {
+  .company-banner-slide-inner {
+    min-height: 400px;
+    height: 460px;
+  }
+
+  .company-banner-bg {
+    width: 400px;
+    height: 400px;
+  }
+
+  .company-banner-heading {
+    font-size: 35px;
+  }
+
+  .company-banner-text-container {
+    max-width: 470px;
+    min-width: 0;
+  }
+
+  .company-banner-content {
+    padding: 60px 4%;
+  }
+}
+
+/* Mobile */
+@media (width <= 767px) {
+  .company-banner-slide-inner {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    min-height: 688px;
+    height: auto;
+  }
+
+  .company-banner-bg {
+    width: 100%;
+    height: auto;
+  }
+
+  .company-banner-bg picture,
+  .company-banner-bg img {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .company-banner-bg-desktop {
+    display: none;
+  }
+
+  .company-banner-bg-mobile {
+    display: block;
+  }
+
+  .company-banner-content {
+    flex-direction: column;
+    width: 91.4%;
+    margin: 0 auto;
+    padding: 40px 0 48px;
+    max-height: none;
+  }
+
+  .company-banner-text-container {
+    min-width: 0;
+  }
+
+  .company-banner-heading {
+    font-size: 32px;
+  }
+
+  .company-banner-quote {
+    font-size: 40px;
+  }
+
+  .company-banner-quote-start {
+    margin-right: 0;
+  }
+
+  .company-banner-quote-end {
+    display: none;
+  }
+
+  .company-banner-subtitle {
+    padding: 16px 0;
+    width: 100%;
+  }
+}

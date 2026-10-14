@@ -1,0 +1,80 @@
+{
+  "definitions": [
+    {
+      "title": "Company Banner",
+      "id": "company-banner",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Company Banner",
+              "filter": "company-banner",
+              "model": "company-banner"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "company-banner",
+      "fields": [
+        {
+          "component": "reference",
+          "name": "image_desktop",
+          "label": "Desktop Image",
+          "valueType": "string",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "reference",
+          "name": "image_mobile",
+          "label": "Mobile Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "text_heading",
+          "label": "Heading",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "text_subtitle",
+          "label": "Subtitle (HTML/Text)",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "button_label",
+          "label": "CTA Label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "button_link",
+          "label": "CTA Link",
+          "valueType": "string",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "button_target",
+          "label": "CTA Target (_self/_blank)",
+          "valueType": "string",
+          "value": "_self"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "company-banner"
+    }
+  ]
+}
