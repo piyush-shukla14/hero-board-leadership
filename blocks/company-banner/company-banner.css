@@ -130,7 +130,8 @@
   font-size: 16px;
 }
 
-.company-banner-cta {
+.company-banner-cta,
+.company-banner-cta:visited {
   display: inline-flex;
   align-items: center;
   justify-content: center;
