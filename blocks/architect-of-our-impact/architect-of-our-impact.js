@@ -246,6 +246,12 @@ function buildPopup(data, trigger) {
     inner.appendChild(rich);
   }
 
+  if (data.impactRoles.length) {
+    const roles = ul({ class: 'aoi-impact-roles' });
+    data.impactRoles.forEach((roleText) => roles.appendChild(li({}, roleText)));
+    inner.appendChild(roles);
+  }
+
   const scrollFade = div({ class: 'aoi-popup-scroll-fade' });
   content.append(closeBtn, inner, scrollFade);
   modal.appendChild(content);
@@ -290,9 +296,10 @@ function buildPopup(data, trigger) {
 }
 
 function buildAction(data) {
-  const label = data.ctaText || (data.popupHtml ? 'Read More' : 'Learn More');
+  const hasPopupContent = data.popupHtml || data.impactRoles.length;
+  const label = data.ctaText || (hasPopupContent ? 'Read More' : 'Learn More');
 
-  if (data.popupHtml) {
+  if (hasPopupContent) {
     return button({ class: 'aoi-action', type: 'button' }, span(label));
   }
 
@@ -349,7 +356,7 @@ export default function decorate(block) {
   // Summary paragraph(s), with Impact Roles listed below it.
   const action = buildAction(data);
   if (action) {
-    if (data.popupHtml) {
+    if (data.popupHtml || data.impactRoles.length) {
       action.addEventListener('click', () => {
         const popup = buildPopup(data, action);
         document.body.appendChild(popup);
@@ -359,12 +366,6 @@ export default function decorate(block) {
       });
     }
     left.appendChild(action);
-  }
-
-  if (data.impactRoles.length) {
-    const roles = ul({ class: 'aoi-impact-roles' });
-    data.impactRoles.forEach((roleText) => roles.appendChild(li({}, roleText)));
-    left.appendChild(roles);
   }
 
   const right = div({ class: 'aoi-right' });
