@@ -1,0 +1,437 @@
+/* board-and-leadership block */
+.board-and-leadership-wrapper {
+  width: 100%;
+  background: #fff;
+  padding: 48px 0;
+}
+
+.board-and-leadership {
+  max-width: 1366px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── Tabs navigation ── */
+.bal-tabs-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e8e8e8;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.bal-tabs-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.bal-tab-btn {
+  position: relative;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 32px;
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.bal-tab-btn span {
+  pointer-events: none;
+}
+
+.bal-tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #ee2326;
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.bal-tab-btn.active {
+  color: #303030;
+}
+
+.bal-tab-btn.active::after {
+  transform: scaleX(1);
+}
+
+.bal-tab-btn:focus-visible {
+  color: #ee2326;
+}
+
+.bal-tab-btn:hover {
+  color: #ee2326;
+}
+
+/* ── Panels ── */
+.bal-panel {
+  display: none;
+}
+
+.bal-panel.active {
+  display: block;
+}
+
+/* When no tabs: single visible panel */
+.bal-panel:only-child {
+  display: block;
+}
+
+.bal-section-title {
+  font-family: Arial, sans-serif;
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 700;
+  color: #303030;
+  text-transform: uppercase;
+  margin: 0 0 32px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Card grid ── */
+.bal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* ── Individual card ── */
+.bal-card {
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #f9f9f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.bal-card:hover,
+.bal-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+}
+
+.bal-card-static {
+  cursor: default;
+}
+
+.bal-card-static:hover,
+.bal-card-static:focus-visible {
+  transform: none;
+  box-shadow: none;
+}
+
+.bal-card-image {
+  width: 100%;
+  aspect-ratio: 498 / 501;
+  overflow: hidden;
+  background: #e8e8e8;
+}
+
+.bal-card-image picture,
+.bal-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.bal-card:hover .bal-card-image img {
+  transform: scale(1.04);
+}
+
+.bal-card-info {
+  padding: 16px 20px 20px;
+  border-top: 2px solid #ee2326;
+}
+
+.bal-card-name {
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #303030;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.bal-card-role {
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Popup overlay ── */
+body.bal-popup-open {
+  overflow: hidden;
+}
+
+.bal-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgb(0 0 0 / 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 20px;
+}
+
+.bal-popup-overlay.bal-popup-visible {
+  opacity: 1;
+}
+
+.bal-popup-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  gap: 0;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.bal-popup-overlay.bal-popup-visible .bal-popup-modal {
+  transform: translateY(0);
+}
+
+.bal-popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: #666;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.bal-popup-close:hover {
+  background: #f0f0f0;
+  color: #ee2326;
+}
+
+.bal-popup-close:focus-visible {
+  outline: 2px solid #ee2326;
+  outline-offset: 2px;
+}
+
+/* Popup image column */
+.bal-popup-image-col {
+  flex: 0 0 280px;
+  background: #1a1a1a;
+  overflow: hidden;
+}
+
+.bal-popup-image-col picture,
+.bal-popup-image-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Popup bio column */
+.bal-popup-bio-col {
+  flex: 1;
+  padding: 40px 40px 40px 36px;
+  overflow-y: auto;
+}
+
+.bal-popup-name {
+  font-family: Arial, sans-serif;
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 700;
+  color: #303030;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  line-height: 1.2;
+  padding-right: 30px;
+}
+
+.bal-popup-role {
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ee2326;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 24px;
+}
+
+.bal-popup-bio p {
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.75;
+  margin: 0 0 14px;
+}
+
+.bal-popup-bio h6 {
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #303030;
+  margin: 24px 0 8px;
+}
+
+.bal-popup-social {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bal-popup-social-link {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #d9d9d9;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #303030;
+  font-size: 11px;
+  overflow: hidden;
+}
+
+.bal-popup-social-link img,
+.bal-popup-social-link picture {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+}
+
+.bal-popup-social-link:hover,
+.bal-popup-social-link:focus-visible {
+  border-color: #ee2326;
+  outline: 2px solid #ee2326;
+  outline-offset: 1px;
+}
+
+.bal-terms {
+  margin-top: 22px;
+}
+
+.bal-terms-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.bal-terms-link img,
+.bal-terms-link picture {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+.bal-terms-label {
+  color: #f00;
+  font-family: Montserrat, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ── Tablet ── */
+@media (width <= 1024px) {
+  .board-and-leadership {
+    padding: 0 24px;
+  }
+
+  .bal-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .bal-tab-btn {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+}
+
+/* ── Mobile ── */
+@media (width <= 767px) {
+  .board-and-leadership-wrapper {
+    padding: 32px 0;
+  }
+
+  .board-and-leadership {
+    padding: 0 16px;
+  }
+
+  .bal-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .bal-card-name {
+    font-size: 13px;
+  }
+
+  .bal-card-role {
+    font-size: 11px;
+  }
+
+  .bal-popup-modal {
+    flex-direction: column;
+    max-height: 95vh;
+  }
+
+  .bal-popup-image-col {
+    flex: 0 0 200px;
+    max-height: 240px;
+  }
+
+  .bal-popup-bio-col {
+    padding: 24px 20px;
+  }
+
+  .bal-popup-name {
+    font-size: 18px;
+    padding-right: 40px;
+  }
+}
+
+@media (width <= 420px) {
+  .bal-grid {
+    grid-template-columns: 1fr;
+  }
+}

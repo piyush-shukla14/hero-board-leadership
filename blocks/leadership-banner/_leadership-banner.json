@@ -1,0 +1,115 @@
+{
+  "definitions": [
+    {
+      "title": "Leadership Banner",
+      "id": "leadership-banner",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Leadership Banner",
+              "filter": "leadership-banner",
+              "model": "leadership-banner"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Leadership Banner Slide",
+      "id": "leadership-banner-slide",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Leadership Banner Slide",
+              "model": "leadership-banner-slide"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "leadership-banner",
+      "fields": [
+        {
+          "component": "text",
+          "name": "text_banner-title",
+          "label": "Banner Name",
+          "valueType": "string",
+          "value": "Leadership Banner"
+        }
+      ]
+    },
+    {
+      "id": "leadership-banner-slide",
+      "fields": [
+        {
+          "component": "reference",
+          "name": "image_desktop",
+          "label": "Desktop Image",
+          "valueType": "string",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "reference",
+          "name": "image_mobile",
+          "label": "Mobile Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "text_heading",
+          "label": "Heading",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "text_subtitle",
+          "label": "Subtitle (HTML/Text)",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "button_label",
+          "label": "CTA Label",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "button_link",
+          "label": "CTA Link",
+          "valueType": "string",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "button_target",
+          "label": "CTA Target (_self/_blank)",
+          "valueType": "string",
+          "value": "_self"
+        },
+        {
+          "component": "text",
+          "name": "text_interval",
+          "label": "Autoplay Interval (milliseconds)",
+          "valueType": "string",
+          "value": "5000"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "leadership-banner",
+      "components": ["leadership-banner-slide"]
+    }
+  ]
+}

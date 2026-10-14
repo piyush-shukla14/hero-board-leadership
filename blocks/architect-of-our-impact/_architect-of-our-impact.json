@@ -1,0 +1,137 @@
+{
+  "definitions": [
+    {
+      "title": "Architect Of Our Impact",
+      "id": "architect-of-our-impact",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Architect Of Our Impact",
+              "filter": "architect-of-our-impact",
+              "model": "architect-of-our-impact"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "architect-of-our-impact",
+      "fields": [
+        {
+          "component": "text",
+          "name": "text_title",
+          "label": "Eyebrow Title",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "text_heading",
+          "label": "Heading",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "text_subheading",
+          "label": "Subheading",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "image_background",
+          "label": "Background Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "text_background-alt",
+          "label": "Background Image Alt",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "image_profile-desktop",
+          "label": "Profile Image (Desktop)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "reference",
+          "name": "image_profile-mobile",
+          "label": "Profile Image (Mobile)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "text_profile-alt",
+          "label": "Profile Image Alt",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "popup_image",
+          "label": "Popup Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "popup_image-alt",
+          "label": "Popup Image Alt",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "popup_background-image",
+          "label": "Popup Background Image",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "richtext",
+          "name": "text_summary",
+          "label": "Summary (use the toolbar for paragraphs/bold)",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "text_impact-roles",
+          "label": "Impact Roles (use the bullet-list toolbar button)",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "button_label",
+          "label": "CTA Label",
+          "valueType": "string",
+          "value": "Read More"
+        },
+        {
+          "component": "text",
+          "name": "button_link",
+          "label": "CTA Link (used when popup content is empty)",
+          "valueType": "string",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "name": "popup_content",
+          "label": "Popup Content (use the toolbar for paragraphs/headings/bullet lists)",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "architect-of-our-impact",
+      "components": []
+    }
+  ]
+}
