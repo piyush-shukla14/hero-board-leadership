@@ -1,4 +1,4 @@
 mountpoints:
   /:
-    url: "https://drive.google.com/drive/folders/1hroqwAdmnPXtfxy21Xl54oJSm3xQ5gNl"
+    url: "https://drive.google.com/drive/folders/1UNDxbflQWg0hpGBdUUp7vO7xw18tKP7d"
     type: "google"
