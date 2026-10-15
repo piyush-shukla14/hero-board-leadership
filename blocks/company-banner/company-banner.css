@@ -54,8 +54,8 @@ main > .section > .leadership-banner-wrapper {
 }
 
 .starting-tag svg {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
 }
 
 .heading-text {
@@ -68,8 +68,8 @@ main > .section > .leadership-banner-wrapper {
 }
 
 .heading-text svg {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   margin-left: 2px;
   vertical-align: text-bottom;
 }
