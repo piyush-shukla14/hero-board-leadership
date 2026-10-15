@@ -60,10 +60,12 @@ main > .section > .leadership-banner-wrapper {
 
 .heading-text {
   color: #fff;
-  font-size: 56px;
-  font-weight: 600;
+  font-family: Arial Narrow, "Helvetica Neue Condensed", Oswald, Arial, sans-serif;
+  font-size: 52px;
+  font-weight: 700;
   line-height: 1.15;
-  max-width: 692px;
+  letter-spacing: -0.01em;
+  max-width: 740px;
   margin-bottom: 24px;
 }
 
