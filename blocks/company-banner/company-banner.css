@@ -52,8 +52,7 @@ main > .section > .leadership-banner-wrapper {
   display: flex;
 }
 
-.starting-tag svg,
-.heading-text svg {
+.starting-tag svg {
   width: 40px;
   height: 40px;
 }
@@ -62,14 +61,16 @@ main > .section > .leadership-banner-wrapper {
   color: #fff;
   font-size: 56px;
   font-weight: 600;
-  line-height: 100%;
+  line-height: 1.15;
   max-width: 692px;
   margin-bottom: 24px;
 }
 
 .heading-text svg {
+  width: 28px;
+  height: 28px;
   margin-left: 5px;
-  vertical-align: top;
+  vertical-align: baseline;
 }
 
 .subheading {
