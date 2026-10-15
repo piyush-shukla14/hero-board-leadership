@@ -177,10 +177,10 @@ main > .section > .board-and-leadership-wrapper {
 }
 
 .bal-card-divider {
-  width: 32px;
-  height: 2px;
+  width: 48px;
+  height: 3px;
   background: #ee2326;
-  margin: 10px auto;
+  margin: 12px auto;
 }
 
 .bal-card-role {
