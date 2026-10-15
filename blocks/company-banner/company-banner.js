@@ -7,6 +7,23 @@ const QUOTE_END_SVG = '<svg id="end-tag" xmlns="http://www.w3.org/2000/svg" widt
 
 const isAuthor = () => window?.origin !== undefined && window.origin.includes('author');
 
+// Google Docs only wraps table-cell content in <p> when the cell has more than one
+// paragraph; a single unstyled line exports as plain text directly inside the cell div.
+// Fall back to treating the whole cell as one paragraph in that case.
+function getParas(row) {
+  const realParas = Array.from(row.querySelectorAll('p'))
+    .filter((p) => p.textContent.trim() || p.querySelector('a[href]'));
+  if (realParas.length) return realParas;
+
+  const cols = Array.from(row.children);
+  const textCell = cols.find((cell) => cell.textContent.trim());
+  if (!textCell) return [];
+
+  const pseudoPara = document.createElement('p');
+  pseudoPara.innerHTML = textCell.innerHTML;
+  return [pseudoPara];
+}
+
 function parseBannerData(block) {
   const rows = Array.from(block.children);
   if (!rows.length) return null;
@@ -25,7 +42,7 @@ function parseBannerData(block) {
       return;
     }
 
-    const paras = Array.from(row.querySelectorAll('p')).filter((p) => p.textContent.trim() || p.querySelector('a[href]'));
+    const paras = getParas(row);
     if (!paras.length) return;
 
     const linkPara = paras.find((p) => p.querySelector('a[href]'));
