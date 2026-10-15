@@ -1,14 +1,18 @@
 /* board-and-leadership block */
+main > .section > .board-and-leadership-wrapper {
+  max-width: none;
+}
+
 .board-and-leadership-wrapper {
   width: 100%;
   background: #fff;
-  padding: 48px 0;
+  padding: 0 0 84px;
 }
 
 .board-and-leadership {
-  max-width: 1366px;
-  margin: 0 auto;
-  padding: 0 40px;
+  max-width: none;
+  margin: 0;
+  padding: 0 120px;
 }
 
 /* ── Tabs navigation ── */
@@ -101,17 +105,21 @@
 
 /* ── Card grid ── */
 .bal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 56px 20px;
 }
 
 /* ── Individual card ── */
 .bal-card {
   cursor: pointer;
-  border-radius: 4px;
   overflow: hidden;
-  background: #f9f9f9;
+  background: #fff;
+  text-align: center;
+  width: 100%;
+  max-width: 285px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   outline: none;
 }
@@ -165,6 +173,7 @@
   color: #303030;
   margin: 0 0 6px;
   line-height: 1.3;
+  text-transform: uppercase;
 }
 
 .bal-card-role {
@@ -200,10 +209,11 @@ body.bal-popup-open {
 .bal-popup-modal {
   position: relative;
   background: #fff;
-  border-radius: 8px;
-  max-width: 900px;
-  width: 100%;
-  max-height: 90vh;
+  border-radius: 0;
+  max-width: 1160px;
+  width: 90%;
+  height: 90%;
+  max-height: 600px;
   overflow-y: auto;
   display: flex;
   gap: 0;
@@ -247,7 +257,8 @@ body.bal-popup-open {
 
 /* Popup image column */
 .bal-popup-image-col {
-  flex: 0 0 280px;
+  width: 40%;
+  flex: 0 0 40%;
   background: #1a1a1a;
   overflow: hidden;
 }

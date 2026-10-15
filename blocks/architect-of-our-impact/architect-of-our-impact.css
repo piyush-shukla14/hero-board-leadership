@@ -1,4 +1,8 @@
 /* architect-of-our-impact block - based on hero-aem-website architect-of-our-impact reference */
+main > .section > .architect-of-our-impact-wrapper {
+  max-width: none;
+}
+
 .architect-of-our-impact-wrapper {
   width: 100%;
   background: var(--white, #fff);
