@@ -1,4 +1,10 @@
 /* company-banner block - matches hero-aem-website production leadership-banner layout */
+
+/* Break out of the default 1200px section max-width so the banner is full-bleed, matching production */
+main > .section > .leadership-banner-wrapper {
+  max-width: none;
+}
+
 .leadership-banner {
   background: linear-gradient(263deg, #060606 0.68%, #202020 95.94%);
   min-height: 550px;
@@ -6,8 +12,8 @@
 
 .leadership-container {
   display: flex;
-  align-items: flex-end;
-  height: 550px;
+  align-items: stretch;
+  min-height: 550px;
 }
 
 .leadership-image {
@@ -15,6 +21,7 @@
   height: 451px;
   flex-shrink: 0;
   overflow: hidden;
+  align-self: flex-end;
 }
 
 .leadership-image .image-container {
@@ -31,10 +38,9 @@
 .leadership-content {
   flex: 1;
   color: #fff;
-  padding: 96px 8% 96px 4%;
+  padding: 48px 8% 48px 4%;
   display: flex;
   flex-direction: row;
-  max-height: 550px;
   box-sizing: border-box;
 }
 
