@@ -167,6 +167,7 @@ function buildCard(person, sectionIdx, personIdx) {
   const info = div(
     { class: 'bal-card-info' },
     h3({ class: 'bal-card-name' }, person.name),
+    div({ class: 'bal-card-divider' }),
     p({ class: 'bal-card-role' }, person.role),
   );
 

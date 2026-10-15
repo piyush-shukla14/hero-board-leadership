@@ -163,7 +163,7 @@ main > .section > .board-and-leadership-wrapper {
 
 .bal-card-info {
   padding: 16px 20px 20px;
-  border-top: 2px solid #ee2326;
+  text-align: center;
 }
 
 .bal-card-name {
@@ -171,9 +171,16 @@ main > .section > .board-and-leadership-wrapper {
   font-size: 15px;
   font-weight: 700;
   color: #303030;
-  margin: 0 0 6px;
+  margin: 0;
   line-height: 1.3;
   text-transform: uppercase;
+}
+
+.bal-card-divider {
+  width: 32px;
+  height: 2px;
+  background: #ee2326;
+  margin: 10px auto;
 }
 
 .bal-card-role {
