@@ -178,7 +178,7 @@ main > .section > .board-and-leadership-wrapper {
 
 .bal-card-divider {
   width: 64px;
-  height: 2px;
+  height: 1px;
   background: #ee2326;
   margin: 12px auto;
 }
