@@ -64,6 +64,7 @@ main > .section > .leadership-banner-wrapper {
   font-weight: 600;
   line-height: 100%;
   max-width: 692px;
+  margin-bottom: 24px;
 }
 
 .heading-text svg {
@@ -73,7 +74,7 @@ main > .section > .leadership-banner-wrapper {
 
 .subheading {
   color: #fff;
-  padding: 48px 0 24px;
+  padding: 0 0 24px;
   font-size: 16px;
   font-weight: 400;
   line-height: 140%;
