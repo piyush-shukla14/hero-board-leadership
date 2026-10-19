@@ -1,5 +1,5 @@
 import {
-  a, button, div, h2, p, span, ul, li,
+  a, button, div, span, ul, li,
 } from '../../scripts/dom-helpers.js';
 
 const isAuthor = () => window?.origin !== undefined && window.origin.includes('author');
@@ -238,8 +238,6 @@ function buildPopup(data, trigger) {
   }
 
   const inner = div({ class: 'aoi-popup-content-inner' });
-  if (data.heading) inner.appendChild(h2({ class: 'aoi-popup-heading' }, data.heading));
-  if (data.subHeading) inner.appendChild(p({ class: 'aoi-popup-role' }, data.subHeading));
   if (data.popupHtml) {
     const rich = div({ class: 'aoi-popup-richtext' });
     rich.innerHTML = data.popupHtml;
@@ -322,7 +320,7 @@ export default function decorate(block) {
   if (isAuthor()) return;
 
   const data = parseBlock(block);
-  if (!data.heading && !data.summaryHtml) return;
+  if (!data.summaryHtml && !data.popupHtml && !data.impactRoles.length) return;
 
   const root = div({ class: 'aoi-root' });
 
@@ -333,19 +331,6 @@ export default function decorate(block) {
 
   const content = div({ class: 'aoi-content' });
   const left = div({ class: 'aoi-left' });
-  const topMobile = div({ class: 'aoi-top-mobile' });
-  const topDesktop = div({ class: 'aoi-top-desktop' });
-
-  const populateHeading = (container) => {
-    if (data.title) container.appendChild(div({ class: 'aoi-title' }, data.title));
-    if (data.heading) container.appendChild(h2({ class: 'aoi-heading' }, data.heading));
-    if (data.subHeading) container.appendChild(p({ class: 'aoi-subheading' }, data.subHeading));
-  };
-
-  populateHeading(topMobile);
-  populateHeading(topDesktop);
-  left.append(topMobile, topDesktop);
-
   if (data.summaryHtml) {
     const summary = div({ class: 'aoi-summary' });
     summary.innerHTML = data.summaryHtml;
