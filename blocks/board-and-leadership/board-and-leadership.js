@@ -122,11 +122,26 @@ function parseSections(block) {
     const value = cells[1];
     if (!key) return;
 
-    if (['section', 'board-and-leadership-section', 'section-title'].includes(key)) {
+    if (['section', 'board-and-leadership-section'].includes(key)) {
       finishPerson();
-      const title = getText(value) || (key === 'section-title' ? getText(value) : '');
-      currentSection = emptySection(title);
+      currentSection = emptySection(getText(value));
       sections.push(currentSection);
+      return;
+    }
+
+    if (['section-title', 'tab-name', 'tab-title'].includes(key)) {
+      finishPerson();
+      const title = getText(value);
+
+      // A component marker is commonly followed by a separate Section Title row.
+      // Reuse that empty section instead of creating a second section.
+      if (currentSection && !currentSection.title && !currentSection.persons.length) {
+        currentSection.title = title;
+        currentSection.id = sectionIdFromTitle(title);
+      } else {
+        currentSection = emptySection(title);
+        sections.push(currentSection);
+      }
       return;
     }
 
@@ -353,7 +368,8 @@ export default function decorate(block) {
   const sections = parseSections(block);
   if (!sections.length) return;
 
-  const useTabs = sections.length > 1 && sections.every((s) => s.title);
+  // Show the tab navigation even when only one named section is authored.
+  const useTabs = sections.length > 0 && sections.every((s) => s.title);
 
   const root = div({ class: 'bal-root' });
 
