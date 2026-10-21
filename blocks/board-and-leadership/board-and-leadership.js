@@ -2,150 +2,161 @@ import {
   div, button, h2, h3, p, span,
 } from '../../scripts/dom-helpers.js';
 
-const isAuthor = () => window?.origin !== undefined && window?.origin.includes('author');
-
 function normalizeKey(value = '') {
   return value
     .trim()
     .toLowerCase()
     .replace(/&/g, 'and')
-    .replace(/[^a-z0-9]+/g, '-');
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 function sectionIdFromTitle(title = '') {
-  return normalizeKey(title).replace(/^-|-$/g, '') || 'section';
+  return normalizeKey(title) || 'section';
 }
 
-function parseTermsMeta(currentSection, key, value, cellWithImage) {
-  if (!currentSection) return;
-
-  if (!currentSection.terms) {
-    currentSection.terms = {
-      label: '',
-      href: '',
-      target: '_self',
-      iconPicture: null,
-    };
-  }
-
-  const anchor = value.querySelector('a[href]');
-  const normalizedKey = normalizeKey(key);
-
-  if (['terms-link-label', 'terms-label', 'download-label'].includes(normalizedKey)) {
-    currentSection.terms.label = (anchor?.textContent?.trim() || value.textContent?.trim() || '');
-  }
-
-  if (['terms-link-url', 'terms-url', 'terms-link-path', 'download-url'].includes(normalizedKey)) {
-    currentSection.terms.href = anchor?.getAttribute('href') || value.textContent?.trim() || '';
-    currentSection.terms.target = anchor?.getAttribute('target') || '_blank';
-  }
-
-  if (['terms-link-icon', 'terms-icon', 'download-icon'].includes(normalizedKey)) {
-    currentSection.terms.iconPicture = cellWithImage?.querySelector('picture')?.cloneNode(true)
-      || value.querySelector('picture')?.cloneNode(true)
-      || null;
-  }
+function getText(cell) {
+  return cell?.textContent?.trim() || '';
 }
 
-function parseSocialLinks(cells) {
-  const links = [];
-  cells.forEach((cell) => {
-    Array.from(cell.querySelectorAll('a[href]')).forEach((anchor) => {
-      const href = anchor.getAttribute('href');
-      if (!href) return;
-      const iconPicture = anchor.querySelector('picture')?.cloneNode(true) || null;
-      const iconImage = !iconPicture ? anchor.querySelector('img')?.cloneNode(true) || null : null;
-      const label = anchor.textContent?.trim() || anchor.getAttribute('aria-label') || 'Profile link';
-      links.push({
-        href,
-        target: anchor.getAttribute('target') || '_blank',
-        label,
-        iconPicture,
-        iconImage,
-      });
-    });
-  });
-  return links;
+function getPicture(cell) {
+  return cell?.querySelector('picture')?.cloneNode(true) || null;
+}
+
+function getRichTextHtml(cell) {
+  if (!cell) return '';
+  const children = Array.from(cell.children)
+    .filter((child) => child.textContent.trim() || child.querySelector('picture, a[href]'));
+  return children.length ? children.map((child) => child.outerHTML).join('') : cell.innerHTML.trim();
+}
+
+function getLink(cell, defaultTarget = '_blank') {
+  const anchor = cell?.querySelector('a[href]');
+  return {
+    href: anchor?.getAttribute('href') || getText(cell),
+    target: anchor?.getAttribute('target') || defaultTarget,
+  };
+}
+
+function getBoolean(cell) {
+  return ['true', 'yes', '1', 'disable', 'disabled'].includes(getText(cell).toLowerCase());
+}
+
+function emptySection(title = '') {
+  return {
+    title,
+    id: sectionIdFromTitle(title),
+    persons: [],
+    terms: { label: '', href: '', target: '_blank', iconPicture: null },
+  };
+}
+
+function emptyPerson() {
+  return {
+    picture: null,
+    popupPicture: null,
+    name: '',
+    role: '',
+    bioHTML: '',
+    disablePopup: false,
+    socialLinks: [],
+  };
+}
+
+function addSocialLink(person, fields, suffix = '') {
+  const icon = getPicture(fields[`social-link-${suffix}icon`] || fields[`social-${suffix}icon`]);
+  const urlCell = fields[`social-link-${suffix}url`] || fields[`social-${suffix}url`];
+  const label = getText(fields[`social-link-${suffix}label`] || fields[`social-${suffix}label`]);
+  const { href, target } = getLink(urlCell);
+  if (href) person.socialLinks.push({ href, target, label: label || 'Profile link', iconPicture: icon, iconImage: null });
+}
+
+function finalizePerson(section, person, fields) {
+  if (!section || !person) return;
+
+  person.picture = getPicture(fields['card-image']);
+  person.popupPicture = getPicture(fields['popup-image-optional'] || fields['popup-image'])
+    || person.picture?.cloneNode(true)
+    || null;
+  person.name = getText(fields.name);
+  person.role = getText(fields.role);
+  person.bioHTML = getRichTextHtml(fields['bio-html-text'] || fields.bio);
+  person.disablePopup = getBoolean(fields['disable-popup']);
+
+  addSocialLink(person, fields, '1-');
+  addSocialLink(person, fields, '2-');
+
+  if (person.picture && (person.name || person.role)) section.persons.push(person);
 }
 
 /**
- * Parses block rows into sections.
- * A "section header" row has no picture element and an empty or absent second cell.
- * All subsequent rows until the next section header are treated as person cards.
- *
- * Google Doc authoring table structure:
- * | Board and Leadership |  |
- * |---|---|
- * | Board of Directors |  |         ← section header
- * | [picture] | Name\nRole\nBio |   ← person row
- * ...
- * | Leadership Team |  |            ← section header
- * | [picture] | Name\nRole\nBio |   ← person row
+ * Named-row document format:
+ * Section | Board of Directors
+ * Terms Link Label | Terms and Conditions
+ * Terms Link URL | /terms
+ * Terms Link Icon | [image]
+ * Profile | (blank)
+ * Card Image | [image]
+ * Name | Person name
+ * Role | Person role
+ * Bio | Rich text
+ * ...repeat Profile marker for each card, and Section marker for each tab.
  */
 function parseSections(block) {
-  const rows = Array.from(block.children);
   const sections = [];
-  let current = null;
+  let currentSection = null;
+  let currentPerson = null;
+  let personFields = {};
 
-  rows.forEach((row) => {
-    const cols = Array.from(row.children);
-    const hasPicture = !!row.querySelector('picture');
-    const col0Text = cols[0]?.textContent?.trim() || '';
-    const col1Text = cols.length > 1 ? (cols[1]?.textContent?.trim() || '') : '';
+  const finishPerson = () => {
+    finalizePerson(currentSection, currentPerson, personFields);
+    currentPerson = null;
+    personFields = {};
+  };
 
-    const isSectionHeader = !hasPicture && col0Text && !col1Text;
-    const isMetaRow = !hasPicture && col0Text && col1Text;
+  Array.from(block.children).forEach((row) => {
+    const cells = Array.from(row.children);
+    if (!cells.length) return;
 
-    if (isSectionHeader) {
-      current = {
-        title: col0Text,
-        id: sectionIdFromTitle(col0Text),
-        persons: [],
-        terms: null,
-      };
-      sections.push(current);
-    } else if (isMetaRow) {
-      parseTermsMeta(current, col0Text, cols[1], cols[2]);
-    } else if (hasPicture) {
-      if (!current) {
-        current = {
-          title: '',
-          id: `section-${sections.length + 1}`,
-          persons: [],
-          terms: null,
-        };
-        sections.push(current);
+    const key = normalizeKey(getText(cells[0]));
+    const value = cells[1];
+    if (!key) return;
+
+    if (['section', 'board-and-leadership-section', 'section-title'].includes(key)) {
+      finishPerson();
+      const title = getText(value) || (key === 'section-title' ? getText(value) : '');
+      currentSection = emptySection(title);
+      sections.push(currentSection);
+      return;
+    }
+
+    if (['profile', 'board-and-leadership-profile'].includes(key)) {
+      finishPerson();
+      if (!currentSection) {
+        currentSection = emptySection('');
+        sections.push(currentSection);
       }
-      const picture = row.querySelector('picture');
-      const contentCell = cols.length > 1 ? cols[1] : cols[0];
-      const paras = Array.from(contentCell.querySelectorAll('p'));
-      const extraCells = cols.slice(2);
-      const popupPictureCell = extraCells.find((cell) => cell.querySelector('picture'));
-      const popupPicture = popupPictureCell?.querySelector('picture')?.cloneNode(true) || picture.cloneNode(true);
-      const socialSourceCells = extraCells.filter((cell) => cell !== popupPictureCell);
-      const socialLinks = parseSocialLinks(socialSourceCells);
-      const metadataText = extraCells
-        .map((cell) => cell.textContent?.trim() || '')
-        .filter(Boolean)
-        .join('\n');
-      const disablePopup = /(?:disable\s*popup|no\s*popup)\s*:\s*true/i.test(metadataText);
-      const name = paras[0]?.textContent?.trim() || '';
-      const role = paras[1]?.textContent?.trim() || '';
-      const bioHTML = paras.slice(2).map((el) => el.outerHTML).join('');
+      currentPerson = emptyPerson();
+      return;
+    }
 
-      current.persons.push({
-        picture: picture.cloneNode(true),
-        popupPicture,
-        name,
-        role,
-        bioHTML,
-        disablePopup,
-        socialLinks,
-      });
+    if (!currentSection) {
+      currentSection = emptySection('');
+      sections.push(currentSection);
+    }
+
+    if (key === 'tab-query-param-name') return;
+    if (key === 'terms-link-label') currentSection.terms.label = getText(value);
+    else if (key === 'terms-link-url') Object.assign(currentSection.terms, getLink(value));
+    else if (key === 'terms-link-icon') currentSection.terms.iconPicture = getPicture(value);
+    else {
+      if (!currentPerson) currentPerson = emptyPerson();
+      personFields[key] = value;
     }
   });
 
-  return sections;
+  finishPerson();
+  return sections.filter((section) => section.persons.length || section.title);
 }
 
 /**
@@ -338,7 +349,6 @@ function buildTermsSection(section) {
 }
 
 export default function decorate(block) {
-  if (isAuthor()) return;
 
   const sections = parseSections(block);
   if (!sections.length) return;
@@ -443,6 +453,6 @@ export default function decorate(block) {
     initTabs(tabsNav, tabPanels, getInitialTabIndex(sections));
   }
 
-  block.innerHTML = '';
-  block.appendChild(root);
+  // Remove document field labels and keep only the decorated tabs/cards.
+  block.replaceChildren(root);
 }
