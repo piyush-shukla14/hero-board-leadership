@@ -57,6 +57,13 @@
           "label": "Tab Query Param Name",
           "valueType": "string",
           "value": "tab"
+        },
+        {
+          "component": "text",
+          "name": "text_authoring-guidelines",
+          "label": "Authoring Guidelines",
+          "value": "Card and popup images must use approved dimensions. Name, role and biography support document formatting. Keep biography within the agreed word limit.",
+          "description": "Author-only guidance. This field is ignored by the frontend."
         }
       ]
     },
@@ -88,6 +95,13 @@
           "label": "Terms Link Icon",
           "valueType": "string",
           "multi": false
+        },
+        {
+          "component": "text",
+          "name": "text_authoring-guidelines",
+          "label": "Authoring Guidelines",
+          "value": "Card and popup images must use approved dimensions. Name, role and biography support document formatting. Keep biography within the agreed word limit.",
+          "description": "Author-only guidance. This field is ignored by the frontend."
         }
       ]
     },
@@ -110,21 +124,21 @@
           "multi": false
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "text_name",
           "label": "Name",
           "valueType": "string",
           "required": true
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "text_role",
           "label": "Role",
           "valueType": "string",
           "required": true
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "text_bio",
           "label": "Bio (HTML/Text)",
           "valueType": "string"
@@ -189,6 +203,13 @@
               "valueType": "string"
             }
           ]
+        },
+        {
+          "component": "text",
+          "name": "text_authoring-guidelines",
+          "label": "Authoring Guidelines",
+          "value": "Card and popup images must use approved dimensions. Name, role and biography support document formatting. Keep biography within the agreed word limit.",
+          "description": "Author-only guidance. This field is ignored by the frontend."
         }
       ]
     }
@@ -196,14 +217,15 @@
   "filters": [
     {
       "id": "board-and-leadership",
-      "components": ["board-and-leadership-section"]
+      "components": [
+        "board-and-leadership-section"
+      ]
     },
     {
       "id": "board-and-leadership-section",
-      "components": ["board-and-leadership-profile"]
+      "components": [
+        "board-and-leadership-profile"
+      ]
     }
   ]
 }
-
-
-

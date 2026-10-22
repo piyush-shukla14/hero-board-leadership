@@ -42,6 +42,13 @@
           "label": "Banner Name",
           "valueType": "string",
           "value": "Leadership Banner"
+        },
+        {
+          "component": "text",
+          "name": "text_authoring-guidelines",
+          "label": "Authoring Guidelines",
+          "value": "Desktop image: use approved dimensions. Mobile image: use approved dimensions. Heading: keep concise. Rich text supports bold, italic, links and approved text styles.",
+          "description": "Author-only guidance. This field is ignored by the frontend."
         }
       ]
     },
@@ -64,14 +71,14 @@
           "multi": false
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "text_heading",
           "label": "Heading",
           "valueType": "string",
           "required": true
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "text_subtitle",
           "label": "Subtitle (HTML/Text)",
           "valueType": "string"
@@ -102,6 +109,13 @@
           "label": "Autoplay Interval (milliseconds)",
           "valueType": "string",
           "value": "5000"
+        },
+        {
+          "component": "text",
+          "name": "text_authoring-guidelines",
+          "label": "Authoring Guidelines",
+          "value": "Desktop image: use approved dimensions. Mobile image: use approved dimensions. Heading: keep concise. Rich text supports bold, italic, links and approved text styles.",
+          "description": "Author-only guidance. This field is ignored by the frontend."
         }
       ]
     }
@@ -109,7 +123,9 @@
   "filters": [
     {
       "id": "leadership-banner",
-      "components": ["leadership-banner-slide"]
+      "components": [
+        "leadership-banner-slide"
+      ]
     }
   ]
 }

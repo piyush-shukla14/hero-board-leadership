@@ -56,7 +56,7 @@ function parseBannerData(block) {
     || desktopPicture?.cloneNode(true)
     || null;
 
-  const headingText = getFieldText(headingField);
+  const headingHTML = getFieldHTML(headingField);
   const subtitleHTML = getFieldHTML(subtitleField);
 
   const ctaLabel = getFieldText(fields['cta-label']);
@@ -68,12 +68,12 @@ function parseBannerData(block) {
   const authoredTarget = getFieldText(fields['cta-target']).toLowerCase();
   const ctaTarget = authoredTarget === '_blank' ? '_blank' : '_self';
 
-  if (!desktopPicture && !mobilePicture && !headingText && !subtitleHTML) return null;
+  if (!desktopPicture && !mobilePicture && !headingHTML && !subtitleHTML) return null;
 
   return {
     desktopPicture,
     mobilePicture,
-    headingText,
+    headingHTML,
     subtitleHTML,
     cta: ctaLabel && ctaHref
       ? { label: ctaLabel, href: ctaHref, target: ctaTarget }
@@ -118,8 +118,10 @@ function buildBanner(data) {
 
   const textContainer = div({ class: 'text-container' });
 
-  if (data.headingText) {
-    const heading = div({ class: 'heading-text' }, data.headingText, endTag());
+  if (data.headingHTML) {
+    const heading = div({ class: 'heading-text' });
+    heading.innerHTML = data.headingHTML;
+    heading.appendChild(endTag());
     textContainer.appendChild(heading);
   }
 

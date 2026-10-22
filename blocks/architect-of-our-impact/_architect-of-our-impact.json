@@ -22,20 +22,20 @@
       "id": "architect-of-our-impact",
       "fields": [
         {
-          "component": "text",
+          "component": "richtext",
           "name": "text_title",
           "label": "Eyebrow Title",
           "valueType": "string"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "text_heading",
           "label": "Heading",
           "valueType": "string",
           "required": true
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "text_subheading",
           "label": "Subheading",
           "valueType": "string"
@@ -124,6 +124,13 @@
           "name": "popup_content",
           "label": "Popup Content (use the toolbar for paragraphs/headings/bullet lists)",
           "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "text_authoring-guidelines",
+          "label": "Authoring Guidelines",
+          "value": "Use approved image dimensions. Summary and popup content support bold, italic, headings, lists and links. Keep content within the agreed word limits.",
+          "description": "Author-only guidance. This field is ignored by the frontend."
         }
       ]
     }

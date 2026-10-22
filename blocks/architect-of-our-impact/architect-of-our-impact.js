@@ -77,9 +77,9 @@ function parseBlock(block) {
     || null;
 
   return {
-    title: getText(fields['eyebrow-title']),
-    heading: getText(fields.heading || fields.header),
-    subHeading: getText(fields.subheading || fields.subheader),
+    titleHtml: getRichTextHtml(fields['eyebrow-title']),
+    headingHtml: getRichTextHtml(fields.heading || fields.header),
+    subHeadingHtml: getRichTextHtml(fields.subheading || fields.subheader),
     backgroundPicture,
     backgroundAlt: getText(fields['background-image-alt']),
     profilePicture,
@@ -206,7 +206,7 @@ function buildAction(data) {
 export default function decorate(block) {
 
   const data = parseBlock(block);
-  if (!data.heading && !data.summaryHtml) return;
+  if (!data.headingHtml && !data.summaryHtml) return;
 
   const root = div({ class: 'aoi-root' });
 
@@ -220,10 +220,18 @@ export default function decorate(block) {
   const topMobile = div({ class: 'aoi-top-mobile' });
   const topDesktop = div({ class: 'aoi-top-desktop' });
 
+  const appendFormatted = (container, tagName, className, html) => {
+    if (!html) return;
+    const element = document.createElement(tagName);
+    element.className = className;
+    element.innerHTML = html;
+    container.appendChild(element);
+  };
+
   const populateHeading = (container) => {
-    if (data.title) container.appendChild(div({ class: 'aoi-title' }, data.title));
-    if (data.heading) container.appendChild(h2({ class: 'aoi-heading' }, data.heading));
-    if (data.subHeading) container.appendChild(p({ class: 'aoi-subheading' }, data.subHeading));
+    appendFormatted(container, 'div', 'aoi-title', data.titleHtml);
+    appendFormatted(container, 'h2', 'aoi-heading', data.headingHtml);
+    appendFormatted(container, 'div', 'aoi-subheading', data.subHeadingHtml);
   };
 
   populateHeading(topMobile);

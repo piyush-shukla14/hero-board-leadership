@@ -55,8 +55,11 @@ function emptyPerson() {
   return {
     picture: null,
     popupPicture: null,
+    popupBackgroundPicture: null,
     name: '',
+    nameHTML: '',
     role: '',
+    roleHTML: '',
     bioHTML: '',
     disablePopup: false,
     socialLinks: [],
@@ -78,8 +81,11 @@ function finalizePerson(section, person, fields) {
   person.popupPicture = getPicture(fields['popup-image-optional'] || fields['popup-image'])
     || person.picture?.cloneNode(true)
     || null;
+  person.popupBackgroundPicture = getPicture(fields['popup-background-image']);
   person.name = getText(fields.name);
+  person.nameHTML = getRichTextHtml(fields.name);
   person.role = getText(fields.role);
+  person.roleHTML = getRichTextHtml(fields.role);
   person.bioHTML = getRichTextHtml(fields['bio-html-text'] || fields.bio);
   person.disablePopup = getBoolean(fields['disable-popup']);
 
@@ -190,11 +196,15 @@ function buildCard(person, sectionIdx, personIdx) {
   }
 
   const imageWrapper = div({ class: 'bal-card-image' }, person.picture);
+  const nameElement = h3({ class: 'bal-card-name' });
+  nameElement.innerHTML = person.nameHTML || person.name;
+  const roleElement = p({ class: 'bal-card-role' });
+  roleElement.innerHTML = person.roleHTML || person.role;
   const info = div(
     { class: 'bal-card-info' },
-    h3({ class: 'bal-card-name' }, person.name),
+    nameElement,
     div({ class: 'bal-card-divider' }),
-    p({ class: 'bal-card-role' }, person.role),
+    roleElement,
   );
 
   card.appendChild(imageWrapper);
@@ -218,8 +228,20 @@ function buildPopup(person) {
   );
 
   const bioCol = div({ class: 'bal-popup-bio-col' });
-  bioCol.appendChild(h2({ class: 'bal-popup-name' }, person.name));
-  bioCol.appendChild(p({ class: 'bal-popup-role' }, person.role));
+
+  if (person.popupBackgroundPicture) {
+    const backgroundImage = person.popupBackgroundPicture.querySelector('img');
+    const backgroundUrl = backgroundImage?.getAttribute('src');
+    if (backgroundUrl) {
+      bioCol.classList.add('has-background-image');
+      bioCol.style.backgroundImage = `url("${backgroundUrl.replace(/"/g, '%22')}")`;
+    }
+  }
+  const popupName = h2({ class: 'bal-popup-name' });
+  popupName.innerHTML = person.nameHTML || person.name;
+  const popupRole = p({ class: 'bal-popup-role' });
+  popupRole.innerHTML = person.roleHTML || person.role;
+  bioCol.append(popupName, popupRole);
 
   if (person.bioHTML) {
     const bioWrapper = div({ class: 'bal-popup-bio' });
